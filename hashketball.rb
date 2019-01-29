@@ -1,3 +1,4 @@
+
 require "pry"
 def game_hash
   game_hash = {
@@ -29,21 +30,22 @@ end
 
 def num_points_scored(player_name)
   arr = []
-  game_hash.each do |location,game_data|
+  game_hash.each do |location, game_data|
     game_data.each do |attr, values|
       if attr == :players
-        values.each do |person, stat|
-          stat.each do |a,b|
-            if person == player_name && a == :points
-              arr << b
+        values.each do |person,data|
+          data.each do |k,v|
+            if person == player_name && k == :points
+              arr.push(v)
             end
           end
         end
       end
     end
   end
-  return arr[0]
+  arr[0]
 end
+
 
 def shoe_size(player_name)
   arr = []
@@ -105,7 +107,7 @@ end
 def player_stats(player_name)
   game_hash.keys.each do |data|
     if game_hash[data][:players].keys.include?(player_name)
-      return game_hash[data][:players][player_name].each_with_object({}) do |(key, value), memo| 
+      return game_hash[data][:players][player_name].each_with_object({}) do |(key, value), memo|
         memo[key] = (key == :shoe ? value.to_i : value)
       end
     end
